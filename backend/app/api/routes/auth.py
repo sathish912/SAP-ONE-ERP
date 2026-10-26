@@ -24,8 +24,8 @@ router = APIRouter(prefix="/auth", tags=["Authentication & Security"])
                     "schema": {
                         "type": "object",
                         "properties": {
-                            "username": {"type": "string", "example": "admin"},
-                            "password": {"type": "string", "example": "admin123"},
+                            "username": {"type": "string", "example": "username"},
+                            "password": {"type": "string", "example": "password"},
                         },
                         "required": ["username", "password"],
                     }

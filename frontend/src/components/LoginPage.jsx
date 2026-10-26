@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { Lock, User, Eye, EyeOff, ShieldCheck, ArrowRight, Building, CheckCircle2 } from 'lucide-react';
+import { Lock, User, Eye, EyeOff, ShieldCheck, ArrowRight } from 'lucide-react';
 import { api } from '../api/client';
 
 export default function LoginPage({ onLoginSuccess }) {
-  const [username, setUsername] = useState('admin');
-  const [password, setPassword] = useState('admin123');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -32,12 +32,6 @@ export default function LoginPage({ onLoginSuccess }) {
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleQuickFill = (user, pass) => {
-    setUsername(user);
-    setPassword(pass);
-    setError('');
   };
 
   return (
@@ -89,8 +83,9 @@ export default function LoginPage({ onLoginSuccess }) {
                   type="text"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  placeholder="e.g. admin"
+                  placeholder="Enter username or email"
                   required
+                  autoFocus
                   className="w-full pl-10 pr-4 py-2.5 bg-slate-900/80 border border-slate-700 rounded-xl text-sm text-white placeholder-slate-500 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 transition"
                 />
               </div>
@@ -110,14 +105,14 @@ export default function LoginPage({ onLoginSuccess }) {
                   type={showPassword ? 'text' : 'password'}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="••••••••"
+                  placeholder="Enter your password"
                   required
                   className="w-full pl-10 pr-10 py-2.5 bg-slate-900/80 border border-slate-700 rounded-xl text-sm text-white placeholder-slate-500 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 transition"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-200"
+                  className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-200 cursor-pointer"
                 >
                   {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                 </button>
@@ -127,7 +122,7 @@ export default function LoginPage({ onLoginSuccess }) {
             <button
               type="submit"
               disabled={loading}
-              className="w-full mt-2 py-3 px-4 bg-gradient-to-r from-sky-500 to-cyan-500 hover:from-sky-600 hover:to-cyan-600 active:scale-[0.99] text-white font-bold rounded-xl shadow-lg shadow-sky-500/25 flex items-center justify-center gap-2 transition disabled:opacity-60 cursor-pointer text-sm"
+              className="w-full mt-3 py-3 px-4 bg-gradient-to-r from-sky-500 to-cyan-500 hover:from-sky-600 hover:to-cyan-600 active:scale-[0.99] text-white font-bold rounded-xl shadow-lg shadow-sky-500/25 flex items-center justify-center gap-2 transition disabled:opacity-60 cursor-pointer text-sm"
             >
               {loading ? (
                 <>
@@ -142,27 +137,6 @@ export default function LoginPage({ onLoginSuccess }) {
               )}
             </button>
           </form>
-
-          {/* Demo Credentials Quick-Fill Banner */}
-          <div className="mt-6 pt-5 border-t border-slate-700/80 text-xs">
-            <div className="text-slate-400 font-medium mb-2.5 flex items-center justify-between">
-              <span>Demo Quick-Fill Access:</span>
-              <span className="text-[10px] text-slate-500 font-mono">Development Mode</span>
-            </div>
-            <div className="flex flex-col sm:flex-row gap-2">
-              <button
-                type="button"
-                onClick={() => handleQuickFill('admin', 'admin123')}
-                className="flex-1 px-3 py-2 bg-slate-900/60 hover:bg-slate-700/60 border border-slate-700 rounded-lg text-left text-slate-300 transition flex items-center justify-between group"
-              >
-                <div>
-                  <div className="font-semibold text-sky-400 text-xs group-hover:underline">Admin User</div>
-                  <div className="text-[10px] text-slate-400 font-mono">admin / admin123</div>
-                </div>
-                <CheckCircle2 className="w-3.5 h-3.5 text-slate-500 group-hover:text-sky-400" />
-              </button>
-            </div>
-          </div>
         </div>
 
         {/* Footer info */}
@@ -173,4 +147,3 @@ export default function LoginPage({ onLoginSuccess }) {
     </div>
   );
 }
-
